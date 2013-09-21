@@ -58,7 +58,7 @@ namespace ReactiveOperators
 
         private static IObservable<bool> PerformOperation(Func<bool,bool,bool> @operator,IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x, y) => @operator(x,y)));
+            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, @operator));
         }
 
         private static IObservable<bool> AntiPerformOperation(Func<bool, bool, bool> @operator, IObservable<bool> operand, params IObservable<bool>[] operands)
