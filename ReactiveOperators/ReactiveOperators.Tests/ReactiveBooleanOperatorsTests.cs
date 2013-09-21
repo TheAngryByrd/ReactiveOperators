@@ -29,33 +29,65 @@ namespace ReactiveOperators.Tests
         [TestCase(true, false, Result = false)]
         [TestCase(false, true, Result = false)]
         [TestCase(true, true, Result = true)]
+        [TestCase(false, false,false, Result = false)]
+        [TestCase(false, false, true, Result = false)]
+        [TestCase(false, true, false, Result = false)]
+        [TestCase(false, true, true, Result = false)]
+        [TestCase(true, false, false, Result = false)]
+        [TestCase(true, false, true, Result = false)]
+        [TestCase(true, true, false, Result = false)]
+        [TestCase(true, true, true, Result = true)]
         public bool And(params bool[] values)
         {
             return PerformTest((a, b) => a.And(b), values);
+        }
+
+        [TestCase(false, false, Result = true)]
+        [TestCase(true, false, Result = true)]
+        [TestCase(false, true, Result = true)]
+        [TestCase(true, true, Result = false)]
+        [TestCase(false, false, false, Result = true)]
+        [TestCase(false, false, true, Result = true)]
+        [TestCase(false, true, false, Result = true)]
+        [TestCase(false, true, true, Result = true)]
+        [TestCase(true, false, false, Result = true)]
+        [TestCase(true, false, true, Result = true)]
+        [TestCase(true, true, false, Result = true)]
+        [TestCase(true, true, true, Result = false)]
+        public bool Nand(params bool[] values)
+        {
+            return PerformTest((a, b) => a.Nand(b), values);
         }
 
         [TestCase(false, false, Result = false)]
         [TestCase(true, false, Result = true)]
         [TestCase(false, true, Result = true)]
         [TestCase(true, true, Result = true)]
+        [TestCase(false, false, false, Result = false)]
+        [TestCase(false, false, true, Result = true)]
+        [TestCase(false, true, false, Result = true)]
+        [TestCase(false, true, true, Result = true)]
+        [TestCase(true, false, false, Result = true)]
+        [TestCase(true, false, true, Result = true)]
+        [TestCase(true, true, false, Result = true)]
+        [TestCase(true, true, true, Result = true)]
         public bool Or(params bool[] values)
         {
             return PerformTest((a, b) => a.Or(b), values);
         }
 
         [TestCase(false,false, Result = true)]
-        [TestCase(true,false, Result = true)]
-        [TestCase(false,true, Result = true)]
-        [TestCase(true,true, Result = false)]
-        public bool Nand(params bool[] values)
-        {
-            return PerformTest((a, b) => a.Nand(b), values);
-        }
-
-        [TestCase(false,false, Result = true)]
         [TestCase(true, false, Result = false)]
         [TestCase(false, true, Result = false)]
         [TestCase(true, true, Result = false)]
+        [TestCase(false, false, false, Result = true)]
+        [TestCase(false, false, true, Result = false)]
+        [TestCase(false, true, false, Result = false)]
+        [TestCase(false, true, true, Result = false)]
+        [TestCase(true, false, false, Result = false)]
+        [TestCase(true, false, true, Result = false)]
+        [TestCase(true, true, false, Result = false)]
+        [TestCase(true, true, true, Result = false)]
         public bool Nor(params bool[] values)
         {
             return PerformTest((a, b) => a.Nor(b), values);
@@ -65,6 +97,14 @@ namespace ReactiveOperators.Tests
         [TestCase(true, false, Result = true)]
         [TestCase(false, true, Result = true)]
         [TestCase(true, true, Result = false)]
+        [TestCase(false, false, false, Result = false)]
+        [TestCase(false, false, true, Result = true)]
+        [TestCase(false, true, false, Result = true)]
+        [TestCase(false, true, true, Result = false)]
+        [TestCase(true, false, false, Result = true)]
+        [TestCase(true, false, true, Result = false)]
+        [TestCase(true, true, false, Result = false)]
+        [TestCase(true, true, true, Result = true)]
         public bool Xor(params bool[] values)
         {
             return PerformTest((a, b) => a.Xor(b), values);
@@ -74,6 +114,14 @@ namespace ReactiveOperators.Tests
         [TestCase(true, false, Result = false)]
         [TestCase(false, true, Result = false)]
         [TestCase(true, true, Result = true)]
+        [TestCase(false, false, false, Result = true)]
+        [TestCase(false, false, true, Result = false)]
+        [TestCase(false, true, false, Result = false)]
+        [TestCase(false, true, true, Result = true)]
+        [TestCase(true, false, false, Result = false)]
+        [TestCase(true, false, true, Result = true)]
+        [TestCase(true, true, false, Result = true)]
+        [TestCase(true, true, true, Result = false)]
         public bool Xnor(params bool[] values)
         {
             return PerformTest((a,b) => a.Xnor(b), values);
@@ -86,7 +134,7 @@ namespace ReactiveOperators.Tests
             var subjects = values.Select(_ => new Subject<bool>()).ToArray();
        
             var combined = logicOperator(subjects.First(), subjects.Skip(1).ToArray());
-            var result = false;
+            bool? result = null;
             combined.Subscribe(c =>
             {
                 result = c;                
@@ -94,14 +142,9 @@ namespace ReactiveOperators.Tests
 
             foreach (var keyValues in values.Zip(subjects, (value,subject) => new {value,subject}))
             {
-                keyValues.subject.OnNext(keyValues.value);
+               keyValues.subject.OnNext(keyValues.value);
             }
-            return result;
+            return result.Value;
         }
-        
-
-
-
-
     }
 }
