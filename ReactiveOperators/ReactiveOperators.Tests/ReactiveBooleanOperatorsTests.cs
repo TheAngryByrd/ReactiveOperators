@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Subjects;
 using Microsoft.Reactive.Testing;
 using NUnit.Framework;
@@ -27,66 +29,73 @@ namespace ReactiveOperators.Tests
         [TestCase(true, false, Result = false)]
         [TestCase(false, true, Result = false)]
         [TestCase(true, true, Result = true)]
-        public bool And(bool x, bool y)
+        public bool And(params bool[] values)
         {
-            return PerformTest(x, y, (a, b) => a.And(b));
+            return PerformTest((a, b) => a.And(b), values);
         }
+
         [TestCase(false, false, Result = false)]
         [TestCase(true, false, Result = true)]
         [TestCase(false, true, Result = true)]
         [TestCase(true, true, Result = true)]
-        public bool Or(bool x, bool y)
+        public bool Or(params bool[] values)
         {
-            return PerformTest(x, y, (a, b) => a.Or(b));
+            return PerformTest((a, b) => a.Or(b), values);
         }
 
         [TestCase(false,false, Result = true)]
         [TestCase(true,false, Result = true)]
         [TestCase(false,true, Result = true)]
         [TestCase(true,true, Result = false)]
-        public bool Nand(bool x, bool y)
+        public bool Nand(params bool[] values)
         {
-            return PerformTest(x, y, (a, b) => a.Nand(b));
-        }        
+            return PerformTest((a, b) => a.Nand(b), values);
+        }
+
         [TestCase(false,false, Result = true)]
         [TestCase(true, false, Result = false)]
         [TestCase(false, true, Result = false)]
         [TestCase(true, true, Result = false)]
-        public bool Nor(bool x, bool y)
+        public bool Nor(params bool[] values)
         {
-            return PerformTest(x, y, (a, b) => a.Nor(b));
+            return PerformTest((a, b) => a.Nor(b), values);
         }
 
         [TestCase(false, false, Result = false)]
         [TestCase(true, false, Result = true)]
         [TestCase(false, true, Result = true)]
         [TestCase(true, true, Result = false)]
-        public bool Xor(bool x, bool y)
+        public bool Xor(params bool[] values)
         {
-            return PerformTest(x, y, (a, b) => a.Xor(b));
-        }  
+            return PerformTest((a, b) => a.Xor(b), values);
+        }
         
         [TestCase(false, false, Result = true)]
         [TestCase(true, false, Result = false)]
         [TestCase(false, true, Result = false)]
         [TestCase(true, true, Result = true)]
-        public bool Xnor(bool x, bool y)
+        public bool Xnor(params bool[] values)
         {
-            return PerformTest(x, y, (a,b) => a.Xnor(b));
-        }  
+            return PerformTest((a,b) => a.Xnor(b), values);
+        }
 
+        private delegate IObservable<bool> LogicOperator(IObservable<bool> operand, params IObservable<bool>[] operands);
 
-        private bool PerformTest(bool x, bool y, Func<IObservable<bool>,IObservable<bool>,IObservable<bool>> logicOperator)
+        private bool PerformTest(LogicOperator logicOperator, params bool[] values)
         {
-            var one = new Subject<bool>();  
-            var two = new Subject<bool>();            
-            var combined = logicOperator(one, two);
+            var subjects = values.Select(_ => new Subject<bool>()).ToArray();
+       
+            var combined = logicOperator(subjects.First(), subjects.Skip(1).ToArray());
             var result = false;
-            combined.Subscribe(c => result = c);
+            combined.Subscribe(c =>
+            {
+                result = c;                
+            });
 
-            one.OnNext(x);
-            two.OnNext(y);
-
+            foreach (var keyValues in values.Zip(subjects, (value,subject) => new {value,subject}))
+            {
+                keyValues.subject.OnNext(keyValues.value);
+            }
             return result;
         }
         
