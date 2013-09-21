@@ -13,36 +13,57 @@ namespace ReactiveOperators
 
         public static IObservable<bool> And(this IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x,y) => x && y));
+            return PerformOperation(And, operand, operands);
         }
         
         public static IObservable<bool> Nand(this IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x,y) => (x && y))).Not();
+            return AntiPerformOperation(And, operand, operands);
+        }
+
+        private static bool And(bool x, bool y)
+        {
+            return x && y;
         }
 
         public static IObservable<bool> Or(this IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x,y) => x || y));
+            return PerformOperation(Or, operand, operands);
         }
 
         public static IObservable<bool> Nor(this IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x,y) => x || y)).Not();
+            return AntiPerformOperation(Or, operand, operands);
+        }
+
+        private static bool Or(bool x, bool y)
+        {
+            return x || y;
         }
 
         public static IObservable<bool> Xor(this IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x, y) => x ^ y));
+            return PerformOperation(Xor, operand, operands);
         }
         
         public static IObservable<bool> Xnor(this IObservable<bool> operand, params IObservable<bool>[] operands)
         {
-            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x, y) => x ^ y)).Not();
-        }      
+            return AntiPerformOperation(Xor, operand, operands);
+        }
+  
+        private static bool Xor(bool x, bool y)
+        {
+            return  x ^ y;
+        }
 
+        private static IObservable<bool> PerformOperation(Func<bool,bool,bool> @operator,IObservable<bool> operand, params IObservable<bool>[] operands)
+        {
+            return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, (x, y) => @operator(x,y)));
+        }
 
-
-        
+        private static IObservable<bool> AntiPerformOperation(Func<bool, bool, bool> @operator, IObservable<bool> operand, params IObservable<bool>[] operands)
+        {
+            return PerformOperation(@operator, operand, operands).Not();
+        }
     }
 }

@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace ReactiveOperators.Tests
 {
     [TestFixture]
-    public class ReactiveBooleanOperators : ReactiveTest
+    public class ReactiveBooleanOperatorsTests : ReactiveTest
     {
 
         [TestCase(false, Result = true)]
