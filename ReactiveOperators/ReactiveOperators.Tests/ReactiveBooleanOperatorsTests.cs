@@ -13,14 +13,14 @@ namespace ReactiveOperators.Tests
 
         [TestCase(false, Result = true)]
         [TestCase(true, Result = false)]
-        public bool Not(bool x)
+        public bool Not(bool value)
         {
-            var one = new Subject<bool>();
-            var not = one.Not();
+            var subject = new Subject<bool>();
+            var notSubject = subject.Not();
             bool result = false;
-            not.Subscribe(c => result = c);
+            notSubject.Subscribe(c => result = c);
 
-            one.OnNext(x);
+            subject.OnNext(value);
 
             return result;
         }
