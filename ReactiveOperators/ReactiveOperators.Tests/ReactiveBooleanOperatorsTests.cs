@@ -17,12 +17,12 @@ namespace ReactiveOperators.Tests
         {
             var subject = new Subject<bool>();
             var notSubject = subject.Not();
-            bool result = false;
+            bool? result = null;
             notSubject.Subscribe(c => result = c);
 
             subject.OnNext(value);
 
-            return result;
+            return result.Value;
         }
 
         [TestCase(false, false, Result = false)]
