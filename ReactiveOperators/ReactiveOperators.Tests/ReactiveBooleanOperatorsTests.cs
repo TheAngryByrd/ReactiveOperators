@@ -39,7 +39,7 @@ namespace ReactiveOperators.Tests
         [TestCase(true, true, true, Result = true)]
         public bool And(params bool[] values)
         {
-            return PerformTest((a, b) => a.And(b), values);
+            return PerformTest(ReactiveBooleanOperators.And, values);
         }
 
         [TestCase(false, false, Result = true)]
@@ -56,7 +56,7 @@ namespace ReactiveOperators.Tests
         [TestCase(true, true, true, Result = false)]
         public bool Nand(params bool[] values)
         {
-            return PerformTest((a, b) => a.Nand(b), values);
+            return PerformTest(ReactiveBooleanOperators.Nand, values);
         }
 
         [TestCase(false, false, Result = false)]
@@ -73,7 +73,7 @@ namespace ReactiveOperators.Tests
         [TestCase(true, true, true, Result = true)]
         public bool Or(params bool[] values)
         {
-            return PerformTest((a, b) => a.Or(b), values);
+            return PerformTest(ReactiveBooleanOperators.Or, values);
         }
 
         [TestCase(false,false, Result = true)]
@@ -90,7 +90,7 @@ namespace ReactiveOperators.Tests
         [TestCase(true, true, true, Result = false)]
         public bool Nor(params bool[] values)
         {
-            return PerformTest((a, b) => a.Nor(b), values);
+            return PerformTest(ReactiveBooleanOperators.Nor, values);
         }
 
         [TestCase(false, false, Result = false)]
@@ -107,7 +107,7 @@ namespace ReactiveOperators.Tests
         [TestCase(true, true, true, Result = true)]
         public bool Xor(params bool[] values)
         {
-            return PerformTest((a, b) => a.Xor(b), values);
+            return PerformTest(ReactiveBooleanOperators.Xor, values);
         }
         
         [TestCase(false, false, Result = true)]
@@ -124,7 +124,7 @@ namespace ReactiveOperators.Tests
         [TestCase(true, true, true, Result = false)]
         public bool Xnor(params bool[] values)
         {
-            return PerformTest((a,b) => a.Xnor(b), values);
+            return PerformTest(ReactiveBooleanOperators.Xnor, values);
         }
 
         private delegate IObservable<bool> LogicOperator(IObservable<bool> operand, params IObservable<bool>[] operands);
