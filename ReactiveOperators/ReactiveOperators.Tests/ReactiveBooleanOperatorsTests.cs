@@ -144,5 +144,31 @@ namespace ReactiveOperators.Tests
             }
             return result.Value;
         }
+
+        [TestCase(false,false,false, Result=false)]
+        [TestCase(false,false,true, Result=true)]
+        [TestCase(false,true,false, Result=false)]
+        [TestCase(false,true,true, Result=true)]
+        [TestCase(true, false, false, Result = false)]
+        [TestCase(true, false, true, Result = true)]
+        [TestCase(true, true, false, Result = true)]
+        [TestCase(true, true, true, Result = true)]
+        public bool XAndYOrZ(bool x, bool y, bool z)
+        {
+            bool? result = null;
+
+            var xObservable = new Subject<bool>();
+            var yObservable = new Subject<bool>();
+            var zObservable = new Subject<bool>();
+
+            var combined = xObservable.And(yObservable).Or(zObservable);
+            combined.Subscribe(c => result = c);
+
+            zObservable.OnNext(z);
+            xObservable.OnNext(x);            
+            yObservable.OnNext(y);        
+
+            return result.Value;
+        }
     }
 }
