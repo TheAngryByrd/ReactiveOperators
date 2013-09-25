@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
 using Microsoft.Reactive.Testing;
@@ -10,7 +9,6 @@ namespace ReactiveOperators.Tests
     [TestFixture]
     public class ReactiveBooleanOperatorsTests : ReactiveTest
     {
-
         [TestCase(false, Result = true)]
         [TestCase(true, Result = false)]
         public bool Not(bool value)
