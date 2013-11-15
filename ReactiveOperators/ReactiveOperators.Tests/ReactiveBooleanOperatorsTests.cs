@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive.Subjects;
 using Microsoft.Reactive.Testing;
 using NUnit.Framework;
+using ReactiveOperators;
 
 namespace ReactiveOperators.Tests
 {

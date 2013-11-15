@@ -1,4 +1,3 @@
-#Requires -Version 2.0 
 <#
 	.SYNOPSIS
 	Creates a NuGet Package (.nupkg) file from the given Project or NuSpec file, and optionally uploads it to a NuGet Gallery.
@@ -144,7 +143,7 @@
 
 	.NOTES
 	Author: Daniel Schroeder
-	Version: 1.3.2
+	Version: 1.2.1
 	
 	This script is designed to be called from PowerShell or ran directly from Windows Explorer.
 	If this script is ran without the $NuSpecFilePath, $ProjectFilePath, and $PackageFilePath parameters, it will automatically search for a .nuspec, project, or package file in the 
@@ -229,18 +228,6 @@ param
 # 	Forces a function to be the first non-comment code to appear in a PowerShell Module.
 Set-StrictMode -Version Latest
 
-# Default the ParameterSet variables that may not have been set depending on which parameter set is being used. This is required for PowerShell v2.0 compatibility.
-if (!(Test-Path Variable:Private:NuSpecFilePath)) { $NuSpecFilePath = $null }
-if (!(Test-Path Variable:Private:ProjectFilePath)) { $ProjectFilePath = $null }
-if (!(Test-Path Variable:Private:PackageFilePath)) { $PackageFilePath = $null }
-if (!(Test-Path Variable:Private:VersionNumber)) { $VersionNumber = $null }
-if (!(Test-Path Variable:Private:ReleaseNotes)) { $ReleaseNotes = $null }
-if (!(Test-Path Variable:Private:PackOptions)) { $PackOptions = $null }
-if (!(Test-Path Variable:Private:NoPromptForVersionNumber)) { $NoPromptForVersionNumber = $false }
-if (!(Test-Path Variable:Private:NoPromptForReleaseNotes)) { $NoPromptForReleaseNotes = $false }
-if (!(Test-Path Variable:Private:DoNotUpdateNuSpecFile)) { $DoNotUpdateNuSpecFile = $false }
-
-
 #==========================================================
 # Define any necessary global variables, such as file paths.
 #==========================================================
@@ -300,13 +287,6 @@ trap [Exception]
 # Function to return the path to backup the NuSpec file to if needed.
 function BackupNuSpecFilePath { return "$NuSpecFilePath.backup" }
 
-# PowerShell v2.0 compatible version of [string]::IsNullOrWhitespace.
-function StringIsNullOrWhitespace([string] $string)
-{
-    if ($string -ne $null) { $string = $string.Trim() }
-    return [string]::IsNullOrEmpty($string)
-}
-
 # Function to update the $NuSpecFilePath (.nuspec file) with the appropriate information before using it to create the NuGet package.
 function UpdateNuSpecFile
 {	
@@ -320,7 +300,7 @@ function UpdateNuSpecFile
 	}
 
 	# If an explicit Version Number was not provided, prompt for it.
-	if (StringIsNullOrWhitespace $VersionNumber)
+	if ([string]::IsNullOrWhiteSpace($VersionNumber))
 	{
 		# Get the current version number from the .nuspec file.
 		$currentVersionNumber = Get-NuSpecVersionNumber -NuSpecFilePath $NuSpecFilePath
@@ -352,7 +332,7 @@ function UpdateNuSpecFile
 		$rxVersionNumberValidation = [regex] '(?i)(^(\d{1,5}(\.\d{1,5}){1,3})$)|(^(\d{1,5}\.\d{1,5}\.\d{1,5}-[a-zA-Z0-9\-\.\+]+)$)|(^(\$version\$)$)|(^$)'
 		
 		# If the user cancelled the prompt or did not provide a valid version number.
-		if ((StringIsNullOrWhitespace $VersionNumber) -or !$rxVersionNumberValidation.IsMatch($VersionNumber))
+		if ([string]::IsNullOrWhiteSpace($VersionNumber) -or !$rxVersionNumberValidation.IsMatch($VersionNumber))
 		{
 			throw "A valid version number to use for the NuGet package was not provided."
 		}
@@ -362,7 +342,7 @@ function UpdateNuSpecFile
 	Set-NuSpecVersionNumber -NuSpecFilePath $NuSpecFilePath -NewVersionNumber $VersionNumber
 	
 	# If the Release Notes were not provided, prompt for them.
-	if (StringIsNullOrWhitespace $ReleaseNotes)
+	if ([string]::IsNullOrWhiteSpace($ReleaseNotes))
 	{
 		# Get the current release notes from the .nuspec file.
 		$currentReleaseNotes = Get-NuSpecReleaseNotes -NuSpecFilePath $NuSpecFilePath
@@ -400,7 +380,7 @@ function UpdateNuSpecFile
 	Set-NuSpecReleaseNotes -NuSpecFilePath $NuSpecFilePath -NewReleaseNotes $ReleaseNotes
 }
 
-function Get-NuSpecVersionNumber([parameter(Position=1,Mandatory=$true)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath)
+function Get-NuSpecVersionNumber([parameter(Position=1,Mandatory)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath)
 {	
 	# Read in the file contents and return the version element's value.
     $fileContents = New-Object System.Xml.XmlDocument
@@ -408,7 +388,7 @@ function Get-NuSpecVersionNumber([parameter(Position=1,Mandatory=$true)][Validat
 	return Get-XmlElementsTextValue -XmlDocument $fileContents -ElementPath "package.metadata.version"
 }
 
-function Set-NuSpecVersionNumber([parameter(Position=1,Mandatory=$true)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath, [parameter(Position=2,Mandatory=$true)][string] $NewVersionNumber)
+function Set-NuSpecVersionNumber([parameter(Position=1,Mandatory)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath, [parameter(Position=2,Mandatory)][string] $NewVersionNumber)
 {	
 	# Read in the file contents, update the version element's value, and save the file.
 	$fileContents = New-Object System.Xml.XmlDocument
@@ -417,7 +397,7 @@ function Set-NuSpecVersionNumber([parameter(Position=1,Mandatory=$true)][Validat
 	$fileContents.Save($NuSpecFilePath)
 }
 
-function Get-NuSpecReleaseNotes([parameter(Position=1,Mandatory=$true)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath)
+function Get-NuSpecReleaseNotes([parameter(Position=1,Mandatory)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath)
 {	
 	# Read in the file contents and return the version element's value.
 	$fileContents = New-Object System.Xml.XmlDocument
@@ -425,7 +405,7 @@ function Get-NuSpecReleaseNotes([parameter(Position=1,Mandatory=$true)][Validate
 	return Get-XmlElementsTextValue -XmlDocument $fileContents -ElementPath "package.metadata.releaseNotes"
 }
 
-function Set-NuSpecReleaseNotes([parameter(Position=1,Mandatory=$true)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath, [parameter(Position=2)][string] $NewReleaseNotes)
+function Set-NuSpecReleaseNotes([parameter(Position=1,Mandatory)][ValidateScript({Test-Path $_ -PathType Leaf})][string] $NuSpecFilePath, [parameter(Position=2)][string] $NewReleaseNotes)
 {
 	# Read in the file contents, update the version element's value, and save the file.
 	$fileContents = New-Object System.Xml.XmlDocument
@@ -519,7 +499,7 @@ function Read-OpenFileDialog([string]$WindowTitle, [string]$InitialDirectory, [s
 	Add-Type -AssemblyName System.Windows.Forms
 	$openFileDialog = New-Object System.Windows.Forms.OpenFileDialog
 	$openFileDialog.Title = $WindowTitle
-	if (!(StringIsNullOrWhitespace $InitialDirectory)) { $openFileDialog.InitialDirectory = $InitialDirectory }
+	if (![string]::IsNullOrWhiteSpace($InitialDirectory)) { $openFileDialog.InitialDirectory = $InitialDirectory }
 	$openFileDialog.Filter = $Filter
 	if ($AllowMultiSelect) { $openFileDialog.MultiSelect = $true }
 	$openFileDialog.ShowHelp = $true	# Without this line the ShowDialog() function may hang depending on system configuration and running from console vs. ISE.
@@ -668,17 +648,11 @@ function Get-TfExecutablePath
 			$vsIdePath = "${vsCommonToolsPath}..\IDE\"
 			break
 		}
+		throw "Unable to find Visual Studio Common Tool Path in order to locate tf.exe to check file out of TFS source control."
 	}
 
-	# Get the path to tf.exe, and return an empty string if the file does not exist.
+	# Get the path to tf.exe.
 	$tfPath = "${vsIdePath}tf.exe"
-    if (!(Test-Path -Path $tfPath)) 
-    {
-        Write-Verbose "Unable to find Visual Studio Common Tool Path, which is used to locate TF.exe."
-        return ""
-    }
-
-    # Return the absolute path to tf.exe.
     $tfPath = Resolve-Path $tfPath
 	return $tfPath
 }
@@ -695,24 +669,17 @@ function Tfs-Checkout
 	)
 	
 	$tfPath = Get-TfExecutablePath
-
-    # If we couldn't find TF.exe, just return without doing anything.
-    if (StringIsNullOrWhitespace $tfPath) 
-    {
-        Write-Verbose "Unable to locate TF.exe, so will skip attempting to check files out of TFS source control." 
-        return 
-    }
 	
 	# Construct the checkout command to run.
 	$tfCheckoutCommand = "& ""$tfPath"" checkout ""$Path"""
 	if ($Recursive) { $tfCheckoutCommand += " /recursive" }
 	
 	# Check the file out of TFS, eating any output.
-	Write-Verbose "About to run command '$tfCheckoutCommand'."
+	Write-Debug "About to run command '$tfCheckoutCommand'."
 	Invoke-Expression -Command $tfCheckoutCommand 2>&1 > $null
 }
 
-function Get-ProjectsAssociatedNuSpecFilePath([parameter(Position=1,Mandatory=$true)][ValidateScript({Test-Path $_ -PathType Leaf})][string]$ProjectFilePath)
+function Get-ProjectsAssociatedNuSpecFilePath([parameter(Position=1,Mandatory)][ValidateScript({Test-Path $_ -PathType Leaf})][string]$ProjectFilePath)
 {
 	# Construct what the project's nuspec file path would be if it has one (i.e. a [Project File Name].nupsec file in the same directory as the project file).
 	$projectsNuSpecFilePath = Join-Path ([System.IO.Path]::GetDirectoryName($ProjectFilePath)) ([System.IO.Path]::GetFileNameWithoutExtension($ProjectFilePath))
@@ -726,7 +693,7 @@ function Get-ProjectsAssociatedNuSpecFilePath([parameter(Position=1,Mandatory=$t
 	return $null
 }
 
-function Get-NuSpecsAssociatedProjectFilePath([parameter(Position=1,Mandatory=$true)][ValidateScript({Test-Path $_ -PathType Leaf})][string]$NuSpecFilePath)
+function Get-NuSpecsAssociatedProjectFilePath([parameter(Position=1,Mandatory)][ValidateScript({Test-Path $_ -PathType Leaf})][string]$NuSpecFilePath)
 {
 	# Construct what the nuspec's associated project file path would be if it has one (i.e. a [NuSpec File Name].[project extension] file in the same directory as the .nuspec file).
 	$nuSpecsProjectFilePath = Join-Path ([System.IO.Path]::GetDirectoryName($NuSpecFilePath)) ([System.IO.Path]::GetFileNameWithoutExtension($NuSpecFilePath))
@@ -761,7 +728,7 @@ try
 	}
 	
 	# If a path to a NuSpec, Project, or Package file to use was not provided, look for one in the same directory as this script or prompt for one.
-	if ((StringIsNullOrWhitespace $NuSpecFilePath) -and (StringIsNullOrWhitespace $ProjectFilePath) -and (StringIsNullOrWhitespace $PackageFilePath))
+	if ([string]::IsNullOrWhiteSpace($NuSpecFilePath) -and [string]::IsNullOrWhiteSpace($ProjectFilePath) -and [string]::IsNullOrWhiteSpace($PackageFilePath))
 	{
 		# Get all of the .nuspec files in the script's directory.
 		$nuSpecFiles = Get-ChildItem "$THIS_SCRIPTS_DIRECTORY\*" -Include "*.nuspec" -Name
@@ -793,7 +760,7 @@ try
 			{
 				# If the .nuspec file belongs to this project file, use this project file.
 				$nuSpecFilePathInThisScriptsDirectory = Join-Path $THIS_SCRIPTS_DIRECTORY ($nuSpecFiles | Select-Object -First 1)
-				if ((!(StringIsNullOrWhitespace $projectsNuSpecFilePath)) -and ($projectsNuSpecFilePath -eq $nuSpecFilePathInThisScriptsDirectory))
+				if ((![string]::IsNullOrWhiteSpace($projectsNuSpecFilePath)) -and ($projectsNuSpecFilePath -eq $nuSpecFilePathInThisScriptsDirectory))
 				{
 					$ProjectFilePath = $projectPath
 				}
@@ -811,7 +778,7 @@ try
         }
 		
 		# If we didn't find a clear .nuspec, project, or package file to use, prompt for one.
-		if ((StringIsNullOrWhitespace $NuSpecFilePath) -and (StringIsNullOrWhitespace $ProjectFilePath) -and (StringIsNullOrWhitespace $PackageFilePath))
+		if ([string]::IsNullOrWhiteSpace($NuSpecFilePath) -and [string]::IsNullOrWhiteSpace($ProjectFilePath) -and [string]::IsNullOrWhiteSpace($PackageFilePath))
 		{
 			# If we should prompt directly from Powershell.
 			if ($UsePowershellPrompts)
@@ -850,7 +817,7 @@ try
 			}
 			
 			# If the user cancelled the file dialog, throw an error since we don't have a .nuspec file to use.
-			if (StringIsNullOrWhitespace $filePathToUse)
+			if ([string]::IsNullOrWhiteSpace($filePathToUse))
 			{
 				throw "No .nuspec, project, or package file was specified. You must specify a valid file to use."
 			}
@@ -860,7 +827,7 @@ try
 			{
 				# If this .nuspec file is associated with a project file, prompt to see if they want to pack the project instead (as that is preferred).
 				$projectPath = Get-NuSpecsAssociatedProjectFilePath -NuSpecFilePath $filePathToUse
-				if (!(StringIsNullOrWhitespace $projectPath))
+				if (![string]::IsNullOrWhiteSpace($projectPath))
 				{
                     # If we are not allowed to prompt the user, just assume we should only use the .nuspec file.
                     if ($NoPrompt)
@@ -921,12 +888,12 @@ try
 	}
 	
 	# Make sure we have the absolute file paths.
-	if (!(StringIsNullOrWhitespace $NuSpecFilePath)) { $NuSpecFilePath = Resolve-Path $NuSpecFilePath }
-	if (!(StringIsNullOrWhitespace $ProjectFilePath)) { $ProjectFilePath = Resolve-Path $ProjectFilePath }
-	if (!(StringIsNullOrWhitespace $PackageFilePath)) { $PackageFilePath = Resolve-Path $PackageFilePath }
+	if (![string]::IsNullOrWhiteSpace($NuSpecFilePath)) { $NuSpecFilePath = Resolve-Path $NuSpecFilePath }
+	if (![string]::IsNullOrWhiteSpace($ProjectFilePath)) { $ProjectFilePath = Resolve-Path $ProjectFilePath }
+	if (![string]::IsNullOrWhiteSpace($PackageFilePath)) { $PackageFilePath = Resolve-Path $PackageFilePath }
 
     # If a path to the NuGet executable was not provided, try and find it.
-    if (StringIsNullOrWhitespace $NuGetExecutableFilePath)
+    if ([string]::IsNullOrWhiteSpace($NuGetExecutableFilePath))
     {
         # If the NuGet executable is in the same directory as this script, use it.
         $nugetExecutablePathInThisDirectory = Join-Path $THIS_SCRIPTS_DIRECTORY "NuGet.exe"
@@ -945,23 +912,23 @@ try
     if (Test-Path $NuGetExecutableFilePath) { Tfs-Checkout -Path $NuGetExecutableFilePath }
 
     # If we were not given a package file, then we need to pack something.
-    if (StringIsNullOrWhitespace $PackageFilePath)
+    if ([string]::IsNullOrWhiteSpace($PackageFilePath))
     {
 	    # If we were given a Project to package.
-	    if (!(StringIsNullOrWhitespace $ProjectFilePath))
+	    if (![string]::IsNullOrWhiteSpace($ProjectFilePath))
 	    {
 		    # Get the project's .nuspec file path, if it has a .nuspec file.
 		    $projectNuSpecFilePath = Get-ProjectsAssociatedNuSpecFilePath -ProjectFilePath $ProjectFilePath
 	
 		    # If this Project has a .nuspec that will be used to package with.
-		    if (!(StringIsNullOrWhitespace $projectNuSpecFilePath))
+		    if (![string]::IsNullOrWhiteSpace($projectNuSpecFilePath))
 		    {
 			    # Update .nuspec file based on user input.
 			    $NuSpecFilePath = $projectNuSpecFilePath
 			    UpdateNuSpecFile
 		    }
 		    # Else we aren't using a .nuspec file, so if a Version Number was given in the script parameters but not the pack parameters, add it to the pack parameters.
-		    elseif (!(StringIsNullOrWhitespace $VersionNumber) -and $PackOptions -notmatch '-Version')
+		    elseif (![string]::IsNullOrWhiteSpace($VersionNumber) -and $PackOptions -notmatch '-Version')
 		    {
 			    $PackOptions += " -Version ""$VersionNumber"""
 		    }
@@ -997,7 +964,7 @@ try
 	    if ($PackOptions -notmatch '-OutputDirectory')
 	    {
             # Insert our Backup Output Directory into the Additional Pack Options.
-            Write-Verbose "Specifying to use the default Output Directory '$backupOutputDirectory'."
+            Write-Debug "Specifying to use the default Output Directory '$backupOutputDirectory'."
 		    $PackOptions += " -OutputDirectory ""$backupOutputDirectory"""
 
             # Make sure the Output Directory we are adding exists.
@@ -1009,7 +976,7 @@ try
 	
 	    # Create the package.
 	    $packCommand = "& ""$NuGetExecutableFilePath"" pack ""$fileToPack"" $PackOptions"
-	    Write-Verbose "About to run command '$packCommand'."
+	    Write-Debug "About to run command '$packCommand'."
         $packOutput = [string]::Empty
 	    Invoke-Expression -Command $packCommand | Tee-Object -Variable packOutput
 	
@@ -1102,7 +1069,7 @@ try
 		        }
 		
 		        # If the user supplied an Api Key.
-                if (!(StringIsNullOrWhitespace $apiKey))
+                if (![string]::IsNullOrWhiteSpace($apiKey))
                 {
                     # Add the given Api Key to the Push Options.
                     $PushOptions += " -ApiKey $apiKey"
@@ -1115,7 +1082,7 @@ try
 
         # Push the package to the gallery.
 		$pushCommand = "& ""$NuGetExecutableFilePath"" push ""$nugetPackageFilePath"" $PushOptions"
-		Write-Verbose "About to run command '$pushCommand'."
+		Write-Debug "About to run command '$pushCommand'."
         $pushOutput = [string]::Empty
 		Invoke-Expression -Command $pushCommand | Tee-Object -Variable pushOutput
 
@@ -1135,7 +1102,7 @@ try
                     [int]$numberOfFilesInDefaultOutputDirectory = ((Get-ChildItem -Path $backupOutputDirectory -Force) | Measure-Object).Count
                     if ((Split-Path -Path $nugetPackageFilePath -Parent) -eq $backupOutputDirectory -and $numberOfFilesInDefaultOutputDirectory -eq 0)
                     {
-                        Write-Verbose "Deleting empty default NuGet package directory '$backupOutputDirectory'."
+                        Write-Debug "Deleting empty default NuGet package directory '$backupOutputDirectory'."
                         Remove-Item -Path $backupOutputDirectory -Force
                     }
                 }
@@ -1172,7 +1139,7 @@ try
 				{
 					# Save the Api key on this PC.
 		            $setApiKeyCommand = "& ""$NuGetExecutableFilePath"" setApiKey ""$apiKey"" -Source ""$sourceToPushPackageTo"""
-		            Write-Verbose "About to run command '$setApiKeyCommand'."
+		            Write-Debug "About to run command '$setApiKeyCommand'."
                     $setApiKeyOutput = [string]::Empty
 		            Invoke-Expression -Command $setApiKeyCommand | Tee-Object -Variable setApiKeyOutput
 

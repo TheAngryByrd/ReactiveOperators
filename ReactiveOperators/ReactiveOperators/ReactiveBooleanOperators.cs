@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
 namespace ReactiveOperators
@@ -28,7 +26,7 @@ namespace ReactiveOperators
         {
             return PerformOperation(And, operand, operands);
         }
-        
+
         /// <summary>
         /// Combines the latest value from boolean observables with the Nand operator
         /// </summary>
@@ -82,7 +80,7 @@ namespace ReactiveOperators
         {
             return PerformOperation(Xor, operand, operands);
         }
-        
+
         /// <summary>
         /// Combines the latest value from boolean observables with the Xnor operator
         /// </summary>
@@ -93,13 +91,13 @@ namespace ReactiveOperators
         {
             return AntiPerformOperation(Xor, operand, operands);
         }
-  
+
         private static bool Xor(bool x, bool y)
         {
-            return  x ^ y;
+            return x ^ y;
         }
 
-        private static IObservable<bool> PerformOperation(Func<bool,bool,bool> @operator,IObservable<bool> operand, params IObservable<bool>[] operands)
+        private static IObservable<bool> PerformOperation(Func<bool, bool, bool> @operator, IObservable<bool> operand, params IObservable<bool>[] operands)
         {
             return operands.Aggregate(operand, (current, observable) => current.CombineLatest(observable, @operator));
         }
@@ -108,7 +106,7 @@ namespace ReactiveOperators
         {
             return PerformOperation(@operator, operand, operands).Not();
 
-            
+
         }
-    }  
+    }
 }

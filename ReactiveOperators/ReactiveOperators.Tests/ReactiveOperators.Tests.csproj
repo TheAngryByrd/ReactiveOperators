@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReactiveOperators\ReactiveOperators.csproj">
-      <Project>{18366e5b-f3d7-4590-b8dc-c073bdcf668d}</Project>
+      <Project>{6FC5DC49-7D80-44D9-A612-DB8906CE0C76}</Project>
       <Name>ReactiveOperators</Name>
     </ProjectReference>
   </ItemGroup>
