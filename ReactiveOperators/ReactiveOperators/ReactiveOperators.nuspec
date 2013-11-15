@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Jimmy Byrd</authors>
+    <owners>Jimmy Byrd</owners>
+    <licenseUrl>https://github.com/TheAngryByrd/ReactiveOperators/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/TheAngryByrd/ReactiveOperators/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A colleciton of boolean operators for Reactive Extensions.</description>
+    <releaseNotes>Converted to PCL</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>ReactiveExtensions Reactive Rx</tags>
+  </metadata>
+</package>
