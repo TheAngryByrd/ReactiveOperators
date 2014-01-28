@@ -62,5 +62,27 @@ namespace ReactiveOperators
                 ? Observable.Return(t.Item2)
                 : Observable.Throw<T>(t.Item3));
         }
+
+        /// <summary>
+        /// This will start a timer everytime the 'priority' queue produces a value. 
+        /// Whenever that timer is running, it will unsubscribe from 
+        /// the 'secondary' queue and resubscribe when the timer expires:
+        /// </summary>
+        /// <param name="priority">The queue that should push its value over the secondary</param>
+        /// <param name="secondary">The queue that will push events while priority is doing nothing</param>
+        /// <param name="delay">The timeframe to ignore secondary queue after priority has published a value</param>
+        /// <returns></returns>
+        public static IObservable<T> PriorityQueueWithinTimeframe<T>(this IObservable<T> priority,
+            IObservable<T> secondary,
+            TimeSpan delay,
+            IScheduler scheduler = null)
+        {
+            scheduler = scheduler ?? Scheduler.Default;
+
+            return priority
+                .Select(_ => Observable.Timer(delay, scheduler).SelectMany(__ => secondary))
+                .StartWith(scheduler, secondary)
+                .Switch();
+        }
     }
 }
