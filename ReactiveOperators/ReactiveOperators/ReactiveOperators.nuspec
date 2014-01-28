@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/TheAngryByrd/ReactiveOperators/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A colleciton of boolean operators for Reactive Extensions.</description>
-    <releaseNotes>Converted to PCL</releaseNotes>
+    <releaseNotes>DLL is now built in release mode</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>ReactiveExtensions Reactive Rx</tags>
   </metadata>
