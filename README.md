@@ -67,3 +67,6 @@ AreAnyCommandsExecuting().Subscribe(x => ProgressBarVisibility = x);
 
 
 ```
+
+##Generic
+Soon.
