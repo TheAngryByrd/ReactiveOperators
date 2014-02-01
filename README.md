@@ -52,7 +52,7 @@ var ageConstraints = this.WhenAnyValue(x => x.Age)
 var AllowAccess = new ReactiveCommand(nameRequired.And(ageConstraints));
 ```
 
-It can also be particularly useful when using it in conjunction with the IsExecuting property of a ReactiveCommand.
+It can also be useful when using it in conjunction with the IsExecuting property of a ReactiveCommand.
 
 ```cs
 private IObservable<bool> AreAnyCommandsExecuting()
