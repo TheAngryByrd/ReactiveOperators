@@ -28,7 +28,7 @@ var andedStreams = binaryStreamA.And(binaryStreamB);
 andedStreams.Subscribe(x => Console.Writeline(x));
 
 binaryStreamA.OnNext(false);
-//No output yet as thse are using combine latest.
+//No output yet as these are using combine latest.
 
 binaryStreamB.OnNext(false);
 //Output: false
