@@ -76,7 +76,6 @@ namespace ReactiveOperators.Tests
                 sched.AdvanceByMs(2);
                 Assert.AreEqual(3, tryCount);
 
-                Assert.Null(lastError);
                 Assert.AreEqual("3", lastError.Message);
             });
         }
