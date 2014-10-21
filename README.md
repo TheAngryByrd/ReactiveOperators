@@ -1,5 +1,7 @@
 # ReactiveOperators
 
+[![Build status](https://ci.appveyor.com/api/projects/status/1d75glc4hep7nqka?svg=true)](https://ci.appveyor.com/project/TheAngryByrd/reactiveoperators)
+
 Is a collection of useful operations outside of the Reactive Extensions standard toolset.
 
 So far this binary has two operator sets:
@@ -68,5 +70,3 @@ AreAnyCommandsExecuting().Subscribe(x => ProgressBarVisibility = x);
 
 ```
 
-##Generic
-Soon.
