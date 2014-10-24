@@ -11,5 +11,5 @@ before_install:
  - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
 
 script:
- - xbuild ReactiveOperators/ReactiveOperators.sln
- - .ci/nunit.sh ReactiveOperators/ReactiveOperators.Tests/bin/Debug/ReactiveOperators.Tests.dll
+ - ./build.sh
+
