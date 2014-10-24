@@ -1,9 +1,13 @@
 #!/bin/bash
 
-if [ ! -f packages/FAKE/tools/Fake.exe ]; then
-  mono .nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion
+
+if [ "$OSTYPE" == "linux-gnu" ]; then
+	mozroots --import --sync
 fi
 
+if [ ! -f packages/FAKE/tools/Fake.exe ]; then
+	mono .nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion
+fi
 
 run_fake() {
     configuration=$1
