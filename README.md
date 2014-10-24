@@ -5,6 +5,8 @@ Head (branch `master`) Build & Unit tests
 
 Windows/.NET [![Build status](https://ci.appveyor.com/api/projects/status/1d75glc4hep7nqka?svg=true)](https://ci.appveyor.com/project/TheAngryByrd/reactiveoperators)
 
+Mono 3.10 [![Build Status](https://travis-ci.org/TheAngryByrd/ReactiveOperators.svg?branch=master)](https://travis-ci.org/TheAngryByrd/ReactiveOperators)
+
 Is a collection of useful operations outside of the Reactive Extensions standard toolset.
 
 So far this binary has two operator sets:
