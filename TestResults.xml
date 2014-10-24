@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\jimmy_000\Documents\GitHub\ReactiveOperators\ReactiveOperators\ReactiveOperators.Tests\bin\Release\ReactiveOperators.Tests.dll" total="86" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-10-23" time="21:44:42">
+  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.8009" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\jimmy_000\Documents\GitHub\ReactiveOperators" machine-name="NINJA" user="jimmy_000" user-domain="NINJA" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Users\jimmy_000\Documents\GitHub\ReactiveOperators\ReactiveOperators\ReactiveOperators.Tests\bin\Release\ReactiveOperators.Tests.dll" executed="True" result="Success" success="True" time="0.426" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="ReactiveOperators" executed="True" result="Success" success="True" time="0.412" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="0.412" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="GenericTests" executed="True" result="Success" success="True" time="0.276" asserts="0">
+                <results>
+                  <test-case name="ReactiveOperators.Tests.GenericTests.DoesNotRetryInCaseOfSuccess" executed="True" result="Success" success="True" time="0.106" asserts="2" />
+                  <test-case name="ReactiveOperators.Tests.GenericTests.PropagatesLastObservedExceptionIfAllTriesFail" executed="True" result="Success" success="True" time="0.055" asserts="4" />
+                  <test-case name="ReactiveOperators.Tests.GenericTests.RetriesOnceIfSuccessBeforeRetriesRunOut" executed="True" result="Success" success="True" time="0.014" asserts="4" />
+                  <test-case name="ReactiveOperators.Tests.GenericTests.UnsubscribingDisposesSource" executed="True" result="Success" success="True" time="0.080" asserts="4" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="ReactiveBooleanOperatorsTests" executed="True" result="Success" success="True" time="0.128" asserts="0">
+                <results>
+                  <test-suite type="ParameterizedTest" name="And" executed="True" result="Success" success="True" time="0.053" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(False,True)" executed="True" result="Success" success="True" time="0.043" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(True,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(True,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.And(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="Nand" executed="True" result="Success" success="True" time="0.013" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(False,True)" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(True,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nand(True,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="Nor" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(True,False,False)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(True,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Nor(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="Not" executed="True" result="Success" success="True" time="0.003" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Not(True)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Not(False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="Or" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(False,False)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(True,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Or(True,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="XAndYOrZ" executed="True" result="Success" success="True" time="0.006" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(True,True,True)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(True,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.XAndYOrZ(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="Xnor" executed="True" result="Success" success="True" time="0.008" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(False,True)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(True,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xnor(True,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="ParameterizedTest" name="Xor" executed="True" result="Success" success="True" time="0.011" asserts="0">
+                    <results>
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(True,True,True)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(True,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(False,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(False,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(False,True,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(False,True,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(True,False,False)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="ReactiveOperators.Tests.ReactiveBooleanOperatorsTests.Xor(True,False,True)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
